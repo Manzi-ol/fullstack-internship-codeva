@@ -3,65 +3,202 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product Manager</title>
+  <title>Product Manager - Codveda Internship</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Header -->
   <header>
-    <h1>Product Manager</h1>
+    <div class="header-content">
+      <div class="logo">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/>
+          <line x1="7" y1="7" x2="7.01" y2="7"/>
+        </svg>
+        <h1>Product Manager</h1>
+      </div>
+      <div class="header-stats">
+        <div class="stat">
+          <span class="stat-number" id="total-count">0</span>
+          <span class="stat-label">Total</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number" id="instock-count">0</span>
+          <span class="stat-label">In Stock</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number" id="outstock-count">0</span>
+          <span class="stat-label">Out of Stock</span>
+        </div>
+      </div>
+    </div>
   </header>
 
   <main>
+    <!-- Form Section -->
     <section class="form-section">
-      <h2 id="form-title">Add New Product</h2>
+      <div class="section-header">
+        <h2 id="form-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          Add New Product
+        </h2>
+      </div>
       <form id="product-form">
         <input type="hidden" id="product-id">
 
         <div class="form-group">
-          <label for="name">Product Name</label>
-          <input type="text" id="name" name="name" required placeholder="Enter product name">
+          <label for="name">Product Name <span class="required">*</span></label>
+          <input type="text" id="name" name="name" required placeholder="e.g. Wireless Headphones">
         </div>
 
         <div class="form-group">
           <label for="description">Description</label>
-          <textarea id="description" name="description" rows="3" placeholder="Enter product description"></textarea>
+          <textarea id="description" name="description" rows="3" placeholder="Brief description of the product..."></textarea>
         </div>
 
-        <div class="form-group">
-          <label for="price">Price ($)</label>
-          <input type="number" id="price" name="price" required min="0" step="0.01" placeholder="0.00">
-        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="price">Price ($) <span class="required">*</span></label>
+            <div class="input-with-icon">
+              <span class="input-icon">$</span>
+              <input type="number" id="price" name="price" required min="0" step="0.01" placeholder="0.00">
+            </div>
+          </div>
 
-        <div class="form-group">
-          <label for="category">Category</label>
-          <input type="text" id="category" name="category" placeholder="Enter category">
+          <div class="form-group">
+            <label for="category">Category</label>
+            <select id="category" name="category">
+              <option value="">Select category</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Clothing">Clothing</option>
+              <option value="Home & Garden">Home & Garden</option>
+              <option value="Sports">Sports</option>
+              <option value="Books">Books</option>
+              <option value="Food & Beverage">Food & Beverage</option>
+              <option value="Health">Health</option>
+              <option value="Toys">Toys</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
         </div>
 
         <div class="form-group checkbox-group">
-          <label for="inStock">
-            <input type="checkbox" id="inStock" name="inStock" checked>
+          <label for="inStock" class="toggle-label">
+            <span class="toggle-switch">
+              <input type="checkbox" id="inStock" name="inStock" checked>
+              <span class="toggle-slider"></span>
+            </span>
             In Stock
           </label>
         </div>
 
         <div class="form-actions">
-          <button type="submit" id="submit-btn">Add Product</button>
-          <button type="button" id="cancel-btn" class="btn-cancel" hidden>Cancel</button>
+          <button type="submit" id="submit-btn" class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Add Product
+          </button>
+          <button type="button" id="cancel-btn" class="btn btn-cancel" hidden>Cancel</button>
         </div>
       </form>
     </section>
 
+    <!-- Products Section -->
     <section class="products-section">
-      <h2>Products</h2>
-      <div id="error-message" class="error-message" hidden></div>
+      <div class="section-header">
+        <h2>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v3"/>
+          </svg>
+          Products
+        </h2>
+        <div class="controls">
+          <div class="search-box">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" id="search-input" placeholder="Search products...">
+          </div>
+          <select id="filter-category" class="filter-select">
+            <option value="">All Categories</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Home & Garden">Home & Garden</option>
+            <option value="Sports">Sports</option>
+            <option value="Books">Books</option>
+            <option value="Food & Beverage">Food & Beverage</option>
+            <option value="Health">Health</option>
+            <option value="Toys">Toys</option>
+            <option value="Other">Other</option>
+          </select>
+          <div class="view-toggle">
+            <button id="grid-view-btn" class="view-btn active" title="Grid view">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+              </svg>
+            </button>
+            <button id="list-view-btn" class="view-btn" title="List view">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sort bar -->
+      <div class="sort-bar">
+        <span class="results-count" id="results-count">0 products</span>
+        <div class="sort-options">
+          <label>Sort by:</label>
+          <select id="sort-select">
+            <option value="name-asc">Name (A-Z)</option>
+            <option value="name-desc">Name (Z-A)</option>
+            <option value="price-asc">Price (Low to High)</option>
+            <option value="price-desc">Price (High to Low)</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="error-message" class="error-message" hidden>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
+        </svg>
+        <span id="error-text"></span>
+      </div>
+
+      <div id="success-message" class="success-message" hidden>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+        <span id="success-text"></span>
+      </div>
+
       <div id="loading" class="loading" hidden>
         <div class="spinner"></div>
         <p>Loading products...</p>
       </div>
+
       <div id="products-grid" class="products-grid"></div>
-      <p id="no-products" class="no-products" hidden>No products found. Add one above!</p>
+      <p id="no-products" class="no-products" hidden>
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v3"/>
+        </svg>
+        <span>No products found</span>
+        <small>Add your first product using the form</small>
+      </p>
     </section>
   </main>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <footer>
+    <p>Product Manager &mdash; Codveda Full-Stack Internship &bull; Level 1</p>
+  </footer>
 
   <script src="app.js"></script>
 </body>
